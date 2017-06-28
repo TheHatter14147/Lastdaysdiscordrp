@@ -1,0 +1,71 @@
+                  while (true)
+                    {
+                        Random rnd = new Random();
+                        int random = rnd.Next(1, 4);
+                        System.Threading.Thread.Sleep(3000); // 10800000 is 3 hours
+                        if (random == 2)
+                        {
+
+
+                            var msg = e.Server.FindChannels("red-skull-raiders").FirstOrDefault();
+
+                            await msg.SendMessage("@Red Skull Raiders Zombies are attacking!!!!");
+                            await msg.SendMessage(
+                                   "DEBUG: getting attacked "
+                                   );
+                            Random hardness = new Random();
+                            int dif = hardness.Next(1, 2);
+
+                            if (dif == 1)
+                            {
+                                await msg.SendMessage(
+                                    "DEBUG: the ammount of zombies "
+                                    );
+                                await msg.SendMessage(
+                                    "[This horde only has 5 Zombies in it][very easy]"
+                                    );
+                                //int zombies = 1;
+                                //while (zombies == 1)
+                               // {
+                                    
+                                    await msg.SendMessage(
+                                    "DEBUG: while loop zombie count"
+                                    );
+                                    var seccommands = discord.GetService<CommandService>();
+
+                                    seccommands.CreateCommand("fire")
+                           
+                                    .Do(async (b) =>
+                                     {
+                                         await msg.SendMessage("DEBUG: fire command" );
+
+                                         Random hitrate = new Random();
+                                         int hit = hitrate.Next(1, 2);
+                                         if (hit == 1)
+                                         {
+                                             await msg.SendMessage(b.User.Name + "Missed");
+                                         }
+                                         if (hit == 2)
+                                         {
+                                            // zombies = zombies - 1;
+                                             await msg.SendMessage(b.User.Name + "Hit there are " + /*zombies +*/ " left");
+                                         }
+
+                                         else
+                                         {
+                                             await msg.SendMessage("ERROR while " + b.User.Name + "fired a shot on very easy mode contact Lachlan ASAP [ERROR CODE: 0001]");
+                                         }
+                                     });
+
+                                    System.Threading.Thread.Sleep(3000);
+                                    await msg.SendMessage(
+                                    "DEBUG: while loop zombie count end"
+                                    );
+
+                                    //}
+                                  
+
+                                }
+
+                            }
+                        }
