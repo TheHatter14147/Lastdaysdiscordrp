@@ -10,7 +10,7 @@ namespace Zombot
     {
         static void Main(string[] args)
         {
-
+            Main bot = new Main();
         }
     }
 }
