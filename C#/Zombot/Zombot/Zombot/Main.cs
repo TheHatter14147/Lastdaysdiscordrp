@@ -12,7 +12,8 @@ namespace Zombot
     class Main
     {
         DiscordClient discord;
-        
+
+      
 
         public Main()
         {
@@ -32,27 +33,49 @@ namespace Zombot
 
 
 
+            
 
 
+            var thecommand = commands.CreateCommand("fire");
 
-            var thecommand = commands.CreateCommand("CIAC");
+
+      
+
            
 
-            commands.CreateCommand("test")
+            commands.CreateCommand("Start")
            .Do(async (e) =>
            {
                var channel = e.Server.FindChannels("red-skull-raiders").FirstOrDefault();
+               await channel.SendMessage("Zombies are attacking");
 
-               await channel.SendMessage("Enter cool text for rp here");
-               thecommand
-               .Do(async (d) =>
-               {
+              
+                   thecommand
+                   .Do(async (d) =>
+                   {
 
-                   await channel.SendMessage("Bam command inside of a command bitch!!!!");
+                       Random rnd = new Random();
+                       int Ran = rnd.Next(1, 2);
 
-               });
 
-            });
+                       if (Ran == 1)
+                       {
+                            await channel.SendMessage("You missed " + d.User.Mention);
+                           Random dam = new Random();
+                           int damage = dam.Next(10, 95);
+                           await channel.SendMessage("You take " + damage + " points worth of damage");
+                           string[] lines = { "First line", "Second line", "Third line" };
+                           System.IO.File.WriteAllLines(@"C:\Users\Public\Documents\LastDays\" + d.User.Name + ".txt", lines);
+                           return;
+                       }
+                       else
+                       {
+                           await channel.SendMessage("You hit a Zombie " + d.User.Mention);
+                           return;
+                       }
+                   });
+               
+           });
 
 
 
