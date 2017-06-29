@@ -13,7 +13,7 @@ namespace Zombot
     {
         DiscordClient discord;
 
-      
+
 
         public Main()
         {
@@ -33,16 +33,26 @@ namespace Zombot
 
 
 
-            
+
 
 
             var thecommand = commands.CreateCommand("fire");
 
 
-      
 
-           
 
+            commands.CreateCommand("register")
+             .Do(async (r) =>
+            {
+                var register = r.Server.FindChannels("bot_register").FirstOrDefault();
+                await register.SendMessage("Account created");
+                var channel = r.Server.FindChannels("red-skull-raiders").FirstOrDefault();
+                await channel.SendMessage("" + r.User.Mention + " Has joined the team ");
+
+                string[] lines = {"100"};
+                System.IO.File.WriteAllLines(@"C:\Users\Public\Documents\LastDays\" + r.User.Name + ".txt", lines);
+
+            });
             commands.CreateCommand("Start")
            .Do(async (e) =>
            {
@@ -64,8 +74,26 @@ namespace Zombot
                            Random dam = new Random();
                            int damage = dam.Next(10, 95);
                            await channel.SendMessage("You take " + damage + " points worth of damage");
-                           string[] lines = { "First line", "Second line", "Third line" };
-                           System.IO.File.WriteAllLines(@"C:\Users\Public\Documents\LastDays\" + d.User.Name + ".txt", lines);
+                           string text = System.IO.File.ReadAllText(@"C:\Users\Public\Documents\LastDays\" + d.User.Name + ".txt");
+                           System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
+                           int x = Int32.Parse(text);
+                           x = x - damage;
+
+
+                           text = x.ToString();
+
+
+                           await channel.SendMessage("You current health is: " + x + "  " + d.User.Mention);
+
+                           string text1 = text;
+                           System.IO.File.WriteAllText(@"C:\Users\Public\Documents\LastDays\" + d.User.Name + ".txt", text1);
+
+                           if (x < 0)
+                           {
+                               await channel.SendMessage("YOU HAVE DIE" + d.User.Mention);
+                           }
+
+
                            return;
                        }
                        else
